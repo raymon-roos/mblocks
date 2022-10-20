@@ -73,6 +73,8 @@ fn main() {
                     tx_clone.send((i, None)).unwrap();
                     continue;
                 }
+                let msg = b.execute();
+                tx_clone.send((i, msg)).unwrap();
                 let _signum = SIGRTMIN + s;
                 handles.push(thread::spawn(move || {
                     await_signals(tx_signals, &[SIGTERM, SIGINT, SIGHUP, _signum]);

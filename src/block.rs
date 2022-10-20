@@ -45,17 +45,28 @@ impl Block<'_> {
                     return None;
                 }
                 match String::from_utf8(output.stdout) {
-                    Ok(s) => Some(concat_string!(
-                        self.prefix,
-                        s.trim(),
-                        self.suffix
-                    )),
+                    Ok(s) => {
+                        if s.is_empty() {
+                            Some(s)
+                        }
+                        else {
+                            Some(concat_string!(self.prefix, s.trim(), self.suffix))
+                        }
+                    },
                     Err(_) => None,
                 }
             }
             CommandType::Function(func) => {
                 match func() {
-                    Ok(r) => Some(concat_string!(self.prefix, r.to_string(), self.suffix)),
+                    Ok(r) => {
+                        let s = r.to_string();
+                        if s.is_empty() {
+                            Some(s)
+                        }
+                        else {
+                            Some(concat_string!(self.prefix, s, self.suffix))
+                        }
+                    },
                     Err(_) => None,
                 }
             }
