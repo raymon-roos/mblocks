@@ -37,10 +37,4 @@ pub const BLOCKS: &[Block] = &[
         prefix: "",
         suffix: "",
     },
-    Block {
-        kind: Once,
-        command: Shell(&["whoami"]),
-        prefix: "",
-        suffix: "",
-    },
 ];
