@@ -5,7 +5,7 @@ use crate::block::BlockType::{Interval, Once, Signal};
 use crate::block::CommandType::{Function, Shell};
 
 use crate::blocks::cpu::cpu_usage;
-use crate::blocks::datetime::current_time;
+use crate::blocks::datetime::{current_time, current_date};
 use crate::blocks::memory::memory_usage;
 
 pub const SEPARATOR: &str = " | ";
@@ -27,7 +27,7 @@ pub const BLOCKS: &[Block] = &[
     },
     Block {
         kind: Interval(1800),
-        command: Shell(&["date", "+%a, %b %d %Y"]),
+        command: Function(current_date),
         prefix: "",
         suffix: "",
     },
