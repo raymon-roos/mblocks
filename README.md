@@ -1,3 +1,13 @@
+This is my fork of the excellent [mblocks](https://gitlab.com/mhdy/mblocks) software, by
+Mehdi Z., who managed to flawlessly implement the suckless philosophy in a Rust program.
+The code is self-documenting and can be extended and hacked on, even without extensive
+knowledge of Rust, because of the ease of use and intuitive nature of the code. 
+
+My changes merely involve what information is displayed in the statusbar, not how it
+functions. 
+
+Original README continues below: 
+
 # mblocks
 
 This program is a multi-threaded memory-safe status monitor written in Rust.
