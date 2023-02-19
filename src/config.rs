@@ -8,7 +8,7 @@ use crate::blocks::cpu::cpu_usage;
 use crate::blocks::datetime::{current_time, current_date};
 use crate::blocks::memory::memory_usage;
 
-pub const SEPARATOR: &str = " | ";
+pub const SEPARATOR: &str = "  ";
 pub const PREFIX: &str = " ";
 pub const SUFFIX: &str = " ";
 
@@ -16,19 +16,19 @@ pub const BLOCKS: &[Block] = &[
     Block {
         kind: Interval(1),
         command: Function(cpu_usage),
-        prefix: "CPU: ",
+        prefix: " ",
         suffix: "%",
     },
     Block {
         kind: Interval(1),
         command: Function(memory_usage),
-        prefix: "MEM: ",
+        prefix: " ",
         suffix: "",
     },
     Block {
         kind: Interval(1800),
         command: Function(current_date),
-        prefix: "",
+        prefix: " ",
         suffix: "",
     },
     Block {
