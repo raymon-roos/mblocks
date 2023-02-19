@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-signal-hook = "0.3.14"
-x11 = "2.20.0"
-psutil = "3.2.2"
-chrono = "0.4"
-threadpool = "1.8.1"
+signal-hook = "*"
+x11 = "*"
+psutil = "*"
+chrono = "*"
+threadpool = "*"
