@@ -14,13 +14,13 @@ pub const SUFFIX: &str = " ";
 
 pub const BLOCKS: &[Block] = &[
     Block {
-        kind: Interval(1),
+        kind: Interval(30),
         command: Function(cpu_usage),
         prefix: " ",
         suffix: "%",
     },
     Block {
-        kind: Interval(1),
+        kind: Interval(30),
         command: Function(memory_usage),
         prefix: " ",
         suffix: "",
@@ -32,7 +32,7 @@ pub const BLOCKS: &[Block] = &[
         suffix: "",
     },
     Block {
-        kind: Interval(30),
+        kind: Interval(60),
         command: Function(current_time),
         prefix: "",
         suffix: "",
