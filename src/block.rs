@@ -48,28 +48,24 @@ impl Block<'_> {
                     Ok(s) => {
                         if s.is_empty() {
                             Some(s)
+                        } else {
+                            Some(format!("{}{}{}", self.prefix, s.trim(), self.suffix))
                         }
-                        else {
-                            Some(concat_string!(self.prefix, s.trim(), self.suffix))
-                        }
-                    },
+                    }
                     Err(_) => None,
                 }
             }
-            CommandType::Function(func) => {
-                match func() {
-                    Ok(r) => {
-                        let s = r.to_string();
-                        if s.is_empty() {
-                            Some(s)
-                        }
-                        else {
-                            Some(concat_string!(self.prefix, s, self.suffix))
-                        }
-                    },
-                    Err(_) => None,
+            CommandType::Function(func) => match func() {
+                Ok(r) => {
+                    let s = r.to_string();
+                    if s.is_empty() {
+                        Some(s)
+                    } else {
+                        Some(format!("{}{}{}", self.prefix, s, self.suffix))
+                    }
                 }
-            }
+                Err(_) => None,
+            },
         }
     }
 }
@@ -77,8 +73,14 @@ impl Block<'_> {
 pub fn infer_status(outputs: &[String]) -> String {
     let rootname = outputs
         .iter()
-        .filter_map(|e| if !(*e).is_empty() { Some(e.to_owned()) } else { None })
+        .filter_map(|e| {
+            if !(*e).is_empty() {
+                Some(e.to_owned())
+            } else {
+                None
+            }
+        })
         .collect::<Vec<String>>()
         .join(config::SEPARATOR);
-    concat_string!(config::PREFIX, rootname, config::SUFFIX)
+    format!("{}{}{}", config::PREFIX, rootname, config::SUFFIX)
 }

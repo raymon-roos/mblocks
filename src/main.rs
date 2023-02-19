@@ -11,9 +11,6 @@ use std::{
 };
 use x11::xlib;
 
-#[macro_use(concat_string)]
-extern crate concat_string;
-
 mod block;
 mod blocks;
 mod config;
