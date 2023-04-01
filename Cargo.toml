@@ -1,12 +1,12 @@
 [package]
 name = "mblocks"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 [dependencies]
-signal-hook = "0.3.14"
-x11 = "2.20.0"
+signal-hook = "0.3.15"
+x11 = "2.21.0"
 concat-string = "1.0.1"
 psutil = "3.2.2"
-chrono = "0.4"
+chrono = "0.4.24"
 threadpool = "1.8.1"
