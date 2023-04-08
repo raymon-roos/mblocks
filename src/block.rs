@@ -6,8 +6,9 @@ use std::process::Command;
 #[allow(dead_code)]
 pub enum BlockType {
     Once,
-    Interval(u64),
+    Periodic(u64),
     Signal(i32),
+    PeriodicOrSignal(u64, i32),
 }
 
 #[allow(dead_code)]
