@@ -3,6 +3,8 @@ use std::error::Error;
 use std::fmt::Display;
 use std::process::Command;
 
+type FuncCmdSignature = Result<Box<dyn Display>, Box<dyn Error>>;
+
 #[allow(dead_code)]
 pub enum BlockType {
     Once,
@@ -14,7 +16,7 @@ pub enum BlockType {
 #[allow(dead_code)]
 pub enum CommandType<'a> {
     Shell(&'a [&'a str]),
-    Function(fn() -> Result<Box<dyn Display>, Box<dyn Error>>),
+    Function(fn() -> FuncCmdSignature),
 }
 
 pub struct Block<'a> {

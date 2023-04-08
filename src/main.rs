@@ -17,6 +17,11 @@ mod config;
 
 const SIGRTMIN: i32 = 34;
 
+type Channel = (
+    Sender<(usize, Option<String>)>,
+    Receiver<(usize, Option<String>)>,
+);
+
 fn await_signals(tx: Sender<i32>, signums: &[i32]) {
     let mut signals = Signals::new(signums).unwrap();
     for signal in signals.forever() {
@@ -28,10 +33,7 @@ fn await_signals(tx: Sender<i32>, signums: &[i32]) {
 }
 
 fn main() {
-    let (tx, rx): (
-        Sender<(usize, Option<String>)>,
-        Receiver<(usize, Option<String>)>,
-    ) = channel();
+    let (tx, rx): Channel = channel();
     let mut handles = vec![];
     let mut outputs = vec![String::from(""); config::BLOCKS.len()];
     let display = unsafe { xlib::XOpenDisplay(ptr::null()) };
@@ -66,7 +68,7 @@ fn main() {
                 handles.push(handle);
             }
             block::BlockType::Signal(s) => {
-                if s < 1 || s > 15 {
+                if !(..=15).contains(&s) {
                     tx_clone.send((i, None)).unwrap();
                     continue;
                 }
@@ -94,7 +96,7 @@ fn main() {
                 handles.push(handle);
             }
             block::BlockType::PeriodicOrSignal(t, s) => {
-                if s < 1 || s > 15 {
+                if !(..=15).contains(&s) {
                     tx_clone.send((i, None)).unwrap();
                     continue;
                 }
@@ -102,7 +104,8 @@ fn main() {
                 tx_clone.send((i, msg)).unwrap();
                 let _signum = SIGRTMIN + s;
                 let tx_clone_signal = tx_clone.clone();
-                let (tx_signals_signal, rx_signals_signal): (Sender<i32>, Receiver<i32>) = channel();
+                let (tx_signals_signal, rx_signals_signal): (Sender<i32>, Receiver<i32>) =
+                    channel();
                 handles.push(thread::spawn(move || {
                     await_signals(tx_signals_signal, &[SIGTERM, SIGINT, SIGHUP, _signum]);
                 }));
@@ -122,7 +125,8 @@ fn main() {
                 });
                 handles.push(handle);
                 let tx_clone_periodic = tx_clone.clone();
-                let (tx_signals_periodic, rx_signals_periodic): (Sender<i32>, Receiver<i32>) = channel();
+                let (tx_signals_periodic, rx_signals_periodic): (Sender<i32>, Receiver<i32>) =
+                    channel();
                 handles.push(thread::spawn(move || {
                     await_signals(tx_signals_periodic, &[SIGTERM, SIGINT, SIGHUP]);
                 }));
